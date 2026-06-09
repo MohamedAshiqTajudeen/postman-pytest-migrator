@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" class="dark-mode">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversion Reports & Code Hub | Pytest Migrator</title>
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        orange: { 500: '#FF6B00', 600: '#E05E00' },
+                        blue: { 500: '#0A66C2', 600: '#0854A0' },
+                        slate: { 900: '#0F172A', 800: '#1E293B', 950: '#0B0F19' }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-primary text-primary transition-all duration-300 min-h-screen flex">
+
+    <!-- SIDEBAR NAVIGATION AREA -->
+    <aside class="w-64 bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800/80 flex flex-col justify-between p-6 h-screen sticky top-0 flex-shrink-0 z-20">
+        <div class="space-y-8">
+            <a href="/" class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-orange-500 to-blue-500 p-0.5 flex items-center justify-center">
+                    <div class="w-full h-full bg-slate-900 rounded-[7px] flex items-center justify-center">
+                        <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                </div>
+                <span class="font-bold text-lg text-slate-800 dark:text-white">Pytest<span class="text-orange-500">Migrator</span></span>
+            </a>
+
+            <!-- Menu links list -->
+            <nav class="space-y-1.5">
+                <span class="block text-[10px] uppercase font-bold tracking-widest text-slate-400 dark:text-slate-500 mb-2 pl-3">Workspace Operations</span>
+                
+                <a href="/dashboard" class="flex items-center space-x-3 px-3 py-2 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition animate-pulse">
+                    <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z"></path>
+                    </svg>
+                    <span>Dashboard Console</span>
+                </a>
+
+                <a href="/dashboard?action=upload" class="flex items-center space-x-3 px-3 py-2 rounded-xl text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition">
+                    <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                    <span>Upload Collection</span>
+                </a>
+
+                <a href="/results" class="flex items-center space-x-3 px-3 py-2 rounded-xl text-xs font-bold bg-orange-500 text-white shadow shadow-orange-500/10">
+                    <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 2V9m-9 3h3m2 0h3m4 3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>Conversion Reports</span>
+                </a>
+            </nav>
+        </div>
+
+        <div class="border-t border-slate-200 dark:border-slate-900 pt-4 text-xs text-slate-500 space-y-3">
+            <div class="flex items-center space-x-3">
+                <button class="theme-toggle theme-toggle-btn w-8 h-8 rounded-lg" title="Toggle Mode">
+                    <svg class="sun-icon w-4 h-4 text-amber-400 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="5"></circle>
+                    </svg>
+                    <svg class="moon-icon w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+                </button>
+                <span>Preferences</span>
+            </div>
+            <a href="/logout" class="block text-rose-500 hover:underline">Log Out</a>
+        </div>
+    </aside>
+
+    <!-- MAIN BODY PORTAL Content -->
+    <main class="flex-grow p-8 sm:p-12 space-y-10 max-h-screen overflow-y-auto relative z-10 w-full max-w-7xl mx-auto">
+        
+        <!-- Header overview bar -->
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-slate-200 dark:border-slate-800/40 pb-6 gap-4">
+            <div>
+                <span class="text-xs uppercase font-bold text-orange-500 tracking-wider">Conversion Results Hub</span>
+                <h1 class="text-3xl font-extrabold text-slate-905 dark:text-white mt-1">Suite code viewer and reports</h1>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                    Collection Name: <strong class="text-slate-850 dark:text-slate-300">{{ stats.collection.collection_name if stats else 'Pending' }}</strong>
+                </p>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <a href="/download?collection_id={{ stats.collection.id if stats else '0' }}" class="px-5 py-3 rounded-xl text-sm font-semibold bg-gradient-to-r from-teal-500 to-teal-600 text-white hover:opacity-95 shadow shadow-teal-500/20 transition flex items-center space-x-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    <span>Download ZIP Suite</span>
+                </a>
+                {% if stats and stats.collection %}
+                <button class="btn-delete-collection px-4 py-3 rounded-xl text-sm font-semibold bg-rose-500/10 hover:bg-rose-600 hover:text-white border border-rose-500/20 hover:border-rose-600 text-rose-600 dark:text-rose-450 transition-all flex items-center space-x-2" data-collection-id="{{ stats.collection.id }}">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                    <span class="btn-text">Delete Report</span>
+                </button>
+                {% endif %}
+                <a href="/dashboard" class="px-4 py-3 rounded-xl text-sm font-semibold border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-850 transition">← Back Console</a>
+            </div>
+        </div>
+
+        {% if error %}
+        <!-- Error alert message checks -->
+        <div class="p-6 bg-rose-500/10 border border-rose-500/30 rounded-2xl text-rose-500 text-sm flex items-start space-x-3">
+            <svg class="w-6 h-6 flex-shrink-0 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+            </svg>
+            <span>{{ error }}</span>
+        </div>
+        {% else %}
+
+        <!-- THREE KEY STATS BARS -->
+        <section class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center shadow-sm">
+                <span class="block text-3xl font-extrabold text-slate-900 dark:text-white">{{ stats.total_apis }}</span>
+                <span class="text-xs uppercase font-bold text-slate-500 tracking-wider block mt-1">API Routes mapped</span>
+            </div>
+            <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center shadow-sm">
+                <span class="block text-3xl font-extrabold text-orange-500">{{ stats.total_scripts }}</span>
+                <span class="text-xs uppercase font-bold text-slate-500 tracking-wider block mt-1">Pytest files compiled</span>
+            </div>
+            <div class="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center shadow-sm">
+                <span class="block text-3xl font-extrabold text-blue-500">{{ stats.collection.score }} / 100</span>
+                <span class="text-xs uppercase font-bold text-slate-500 tracking-wider block mt-1">Initial Validation score</span>
+            </div>
+        </section>
+
+        <!-- DOUBLE CONVERSION ROW SPLIT-FRAMES panel components -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+            
+            <!-- LEFT COLUMN: CODE VIEWER SCREEN -->
+            <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-bold dark:text-white">Pytest Code Editor View</h3>
+                    
+                    <!-- Code selector action -->
+                    <select id="report-script-selector" data-collection-id="{{ stats.collection.id }}" class="px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs text-slate-800 dark:text-white focus:ring-1 focus:ring-orange-500">
+                        {% for s in scripts %}
+                            <option value="{{ s.id }}" data-content="{{ s.script_content | forceescape }}">{{ s.script_name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 bg-[#0B0F19] p-6">
+                    <div class="absolute top-4 right-4 z-10 flex space-x-2">
+                        <!-- Individual file download anchor link -->
+                        <a id="btn-download-selected-script" href="#" class="px-3 py-1.5 bg-slate-800/80 dark:bg-slate-800 hover:bg-slate-700 hover:text-white rounded-lg text-xs font-bold text-slate-300 transition flex items-center space-x-1.5">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                            <span>Download single file</span>
+                        </a>
+                    </div>
+
+                    <!-- Scrollable Python code wrapper -->
+                    <pre class="code-container p-4 overflow-x-auto overflow-y-auto max-h-[460px] text-xs font-mono text-slate-300 leading-relaxed"><code id="report-code-block"># Choose a module from the selector list above...</code></pre>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: TEST CASES & SUGGESTIONS TABS -->
+            <div class="space-y-8">
+                
+                <!-- Tab Panel A: Dynamic Logical recommendations generated -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold dark:text-white flex items-center">
+                        <svg class="w-5 h-5 mr-2 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span>Structural conversion ideas & recommendations</span>
+                    </h3>
+
+                    <div class="space-y-3">
+                        {% for rec in recommendations %}
+                        <div class="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/30 flex items-start space-x-3 hover:scale-[1.01] transition shadow-sm">
+                            <!-- Rec badge -->
+                            <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase shrink-0 
+                                {% if rec.rec_type == 'Security' %}
+                                    bg-rose-500/10 text-rose-650 dark:text-rose-400 border border-rose-500/20
+                                {% elif rec.rec_type == 'Performance' %}
+                                    bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20
+                                {% else %}
+                                    bg-teal-500/10 text-teal-650 dark:text-teal-400 border border-teal-500/20
+                                {% endif %}">
+                                {{ rec.rec_type }}
+                            </span>
+                            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">{{ rec.rec_text }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Tab Panel B: Mapped Logical test cases arrays -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold dark:text-white flex items-center">
+                        <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <span>Automated Pytest Scopes list</span>
+                    </h3>
+
+                    <div class="border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden bg-white dark:bg-slate-950/20 max-h-60 overflow-y-auto">
+                        <table class="w-full text-left border-collapse text-sm">
+                            <thead>
+                                <tr class="border-b border-slate-200 dark:border-slate-800 bg-[#F1F5F9] dark:bg-slate-900/50 text-slate-705 dark:text-slate-400 text-xs font-bold uppercase">
+                                    <th class="py-3 px-4">Test Case details</th>
+                                    <th class="py-3 px-4">Classification</th>
+                                    <th class="py-3 px-4">Assertion spec</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 dark:divide-slate-800/60 text-slate-700 dark:text-slate-300">
+                                {% for tc in testcases %}
+                                <tr class="hover:bg-slate-50 dark:hover:bg-slate-900/10">
+                                    <td class="py-3 px-4 font-semibold">{{ tc.tc_name }}</td>
+                                    <td class="py-3 px-4">
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase 
+                                            {% if tc.tc_type == 'Negative' %} bg-rose-500/15 text-rose-500 dark:text-rose-400
+                                            {% else %} bg-teal-500/15 text-teal-600 dark:text-teal-400 {% endif %}">
+                                            {{ tc.tc_type }}
+                                        </span>
+                                    </td>
+                                    <td class="py-3 px-4 font-mono text-xs text-slate-500">{{ tc.assertion_spec }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        {% endif %}
+
+    </main>
+
+    <!-- App scripts -->
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

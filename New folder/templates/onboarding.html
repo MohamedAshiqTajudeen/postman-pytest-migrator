@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" class="dark-mode">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postman to Pytest Migration Wizard</title>
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        orange: { 500: '#FF6B00', 600: '#E05E00' },
+                        blue: { 500: '#0A66C2', 600: '#0854A0' },
+                        slate: { 900: '#0F172A', 800: '#1E293B' }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-primary text-primary transition-all duration-300 min-h-screen flex flex-col relative overflow-x-hidden">
+
+    <!-- Global App Header -->
+    <header class="w-full max-w-7xl mx-auto px-6 py-4 flex items-center justify-between border-b border-slate-200 dark:border-slate-800/40 relative z-10">
+        <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-orange-500 to-blue-500 p-0.5 flex items-center justify-center">
+                <div class="w-full h-full bg-slate-900 rounded-[7px] flex items-center justify-center">
+                    <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </div>
+            <div>
+                <span class="font-extrabold text-lg tracking-tight dark:text-white">Pytest<span class="text-orange-500">Migrator</span></span>
+            </div>
+        </div>
+
+        <div class="flex items-center space-x-4">
+            <span class="text-xs text-slate-500 hidden sm:inline">Active session: <strong class="text-slate-300">{{ session.get('email', 'Guest') }}</strong></span>
+            <!-- Theme Toggle -->
+            <button class="theme-toggle theme-toggle-btn" title="Toggle Visual Theme">
+                <svg class="sun-icon w-5 h-5 text-amber-400 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="moon-icon w-5 h-5 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                </svg>
+            </button>
+            <a href="/complete-onboarding" class="px-4 py-2 rounded-xl text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 transition">Skip to Dashboard</a>
+        </div>
+    </header>
+
+    <!-- Main Wizard Stage Panel Area -->
+    <main id="onboarding-wizard" class="flex-grow w-full max-w-4xl mx-auto px-6 py-12 flex flex-col justify-center relative z-10">
+        
+        <!-- STEP COUNTER PROGRESS BAR CONTAINER -->
+        <div class="relative w-full mb-12">
+            <!-- Background track line matching dark/light borders nicely -->
+            <div class="absolute top-1/2 left-0 w-full h-1 bg-slate-200 dark:bg-slate-800 transform -translate-y-1/2 z-0"></div>
+            <!-- Dynamic Active Fill Line -->
+            <div id="wizard-progress-bar" class="absolute top-1/2 left-0 w-0 h-1 bg-gradient-to-r from-orange-500 to-blue-500 transform -translate-y-1/2 z-0 transition-all duration-500"></div>
+
+            <!-- Number nodes layout flex row -->
+            <div class="relative z-10 flex items-center justify-between">
+                <!-- Dot 1 -->
+                <div class="flex flex-col items-center">
+                    <div class="progress-step w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 transition-all duration-300">1</div>
+                    <span class="text-[10px] uppercase font-bold tracking-wider text-slate-400 mt-2 hidden sm:block">Welcome</span>
+                </div>
+                <!-- Dot 2 -->
+                <div class="flex flex-col items-center">
+                    <div class="progress-step w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 transition-all duration-300">2</div>
+                    <span class="text-[10px] uppercase font-bold tracking-wider text-slate-400 mt-2 hidden sm:block">Upload</span>
+                </div>
+                <!-- Dot 3 -->
+                <div class="flex flex-col items-center">
+                    <div class="progress-step w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 transition-all duration-300">3</div>
+                    <span class="text-[10px] uppercase font-bold tracking-wider text-slate-400 mt-2 hidden sm:block">Analysis</span>
+                </div>
+                <!-- Dot 4 -->
+                <div class="flex flex-col items-center">
+                    <div class="progress-step w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 transition-all duration-300">4</div>
+                    <span class="text-[10px] uppercase font-bold tracking-wider text-slate-400 mt-2 hidden sm:block">Conversion</span>
+                </div>
+                <!-- Dot 5 -->
+                <div class="flex flex-col items-center">
+                    <div class="progress-step w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 transition-all duration-300">5</div>
+                    <span class="text-[10px] uppercase font-bold tracking-wider text-slate-400 mt-2 hidden sm:block">Download</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ACTIVE VIEWPORT SCREEN BLOCKS -->
+        <div class="flex-grow">
+            
+            <!-- STEP 1: WELCOME SCREEN PANEL -->
+            <div class="wizard-step-panel glass-panel border border-slate-200 dark:border-slate-800 p-8 sm:p-12 rounded-3xl text-center space-y-6" data-step="1">
+                <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-orange-500/10 to-blue-500/10 text-orange-500 border border-orange-500/20 flex items-center justify-center mx-auto animate-bounce">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl sm:text-3xl font-extrabold dark:text-white">Seamless test conversion wizard</h3>
+                <p class="text-sm sm:text-base text-slate-500 dark:text-slate-400 max-w-lg mx-auto leading-relaxed">
+                    Convert Postman assertion variables directly into structured Pytest automation. We will guide you sequentially through schema inspections, syntax optimizations, and compiler checks to build secure test suites.
+                </p>
+                <div class="bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 max-w-sm mx-auto text-xs text-left text-slate-500 dark:text-slate-400 space-y-2">
+                    <div class="flex items-start space-x-2">
+                        <span class="text-orange-500 font-bold">✔</span>
+                        <span>100% compliant with standard Python requests styling.</span>
+                    </div>
+                    <div class="flex items-start space-x-2">
+                        <span class="text-orange-500 font-bold">✔</span>
+                        <span>Identifies duplicate requests, missing globals, and compatibility errors.</span>
+                    </div>
+                    <div class="flex items-start space-x-2">
+                        <span class="text-orange-500 font-bold">✔</span>
+                        <span>Bundles conftest fixtures, requirements list & instructions seamlessly.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STEP 2: UPLOAD COLLECTION SCREEN PANEL -->
+            <div class="wizard-step-panel glass-panel border border-slate-200 dark:border-slate-800 p-8 sm:p-12 rounded-3xl hidden" data-step="2">
+                <div class="text-center mb-8 border-b border-slate-200 dark:border-slate-800/40 pb-6">
+                    <h3 class="text-2xl font-extrabold dark:text-white">Load Postman Collection</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Maximum file limit size is 5MB. Files must represent standard .json schema frameworks.</p>
+                </div>
+
+                <!-- Drag & drop component -->
+                <div id="collection-dropzone" class="drag-drop-area cursor-pointer border-2 border-dashed border-slate-300 dark:border-slate-800 hover:border-orange-500/50 rounded-2xl p-8 sm:p-12 text-center bg-slate-50 dark:bg-slate-900/10">
+                    <input type="file" id="collection-file-input" class="hidden" accept=".json">
+                    
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-xl bg-orange-500/10 text-orange-500 flex items-center justify-center mx-auto">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+                            </svg>
+                        </div>
+                        <div>
+                            <button type="button" id="btn-select-file" class="px-4 py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-xs font-bold rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-705 transition">Select File</button>
+                            <span class="text-slate-500 text-xs block mt-2">or drag and drop your json layout directly here</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live AJAX uploads processing indicators -->
+                <div id="upload-status-text" class="mt-6"></div>
+
+                <!-- Errors message notification box -->
+                <div id="upload-alert-box" class="mt-6 p-4 bg-rose-500/10 border border-rose-500/30 rounded-xl text-rose-500 text-xs flex items-start space-x-2 hidden">
+                    <svg class="w-4 h-4 flex-shrink-0 text-rose-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                    <span class="error-message-text">Invalid Schema specifications</span>
+                </div>
+            </div>
+
+            <!-- STEP 3: ANALYSIS SCREEN PANEL -->
+            <div class="wizard-step-panel glass-panel border border-slate-200 dark:border-slate-800 p-8 rounded-3xl hidden space-y-6" data-step="3">
+                <div class="flex flex-col sm:flex-row items-center justify-between border-b border-slate-200 dark:border-slate-800/40 pb-4 gap-4">
+                    <div>
+                        <h3 class="text-xl font-extrabold dark:text-white">Validation Audit & Mappings</h3>
+                        <p id="analysis-info-status" class="text-xs text-slate-400 mt-1">Reading database variables records...</p>
+                    </div>
+                    
+                    <!-- Readiness Score Circular indicators -->
+                    <div id="analysis-score-container" class="p-4 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center flex items-center space-x-3">
+                        <span class="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider block">Readiness score:</span>
+                        <span id="analysis-score-number" class="text-3xl font-extrabold text-orange-500">--</span>
+                    </div>
+                </div>
+
+                <!-- API items lists grid mapping -->
+                <div class="max-h-60 overflow-y-auto border border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50 dark:bg-slate-950/20">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="border-b border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-400 text-xs font-bold uppercase bg-[#F1F5F9] dark:bg-slate-900/60">
+                                <th class="py-3 px-4">Request Label</th>
+                                <th class="py-3 px-4">Method</th>
+                                <th class="py-3 px-4">Route Path</th>
+                                <th class="py-3 px-4 text-center">Assertions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="analysis-api-table-body">
+                            <tr>
+                                <td colspan="4" class="py-4 text-center text-xs text-slate-500">Wait, loading collection metrics...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Dynamic warnings alert message arrays -->
+                <div id="analysis-warnings-wrapper" class="p-4 rounded-xl bg-amber-500/5 border border-amber-500/25 hidden">
+                    <h5 class="text-xs font-bold text-amber-500 uppercase tracking-widest flex items-center mb-3">
+                        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        Compatibility and Warning flags detected (Score Adjusted):
+                    </h5>
+                    <ul id="analysis-warnings-list" class="space-y-1.5"></ul>
+                </div>
+            </div>
+
+            <!-- STEP 4: AI CONVERSION COMPILER SCREEN PANEL -->
+            <div class="wizard-step-panel glass-panel border border-slate-200 dark:border-slate-800 p-8 rounded-3xl hidden space-y-6" data-step="4">
+                <div class="text-center pb-4 border-b border-slate-200 dark:border-slate-800/40">
+                    <h3 class="text-xl font-extrabold dark:text-white">Hybrid compilation conversion running</h3>
+                    <p class="text-xs text-slate-400 mt-2">Local exact rules will convert standard assertions; complex scripts are directed to Gemini-3.5-Flash.</p>
+                </div>
+
+                <!-- Real time activity log streams box -->
+                <div class="relative bg-slate-950 rounded-2xl border border-slate-800/80 p-5 shadow-inner">
+                    <div class="absolute top-4 right-4 flex space-x-1.5" id="conversion-loading-indicator">
+                        <span class="w-2 h-2 rounded-full bg-orange-500 animate-ping"></span>
+                        <span class="w-2 h-2 rounded-full bg-orange-500"></span>
+                    </div>
+
+                    <pre id="conversion-console-logs" class="text-xs font-mono text-emerald-400 min-h-[140px] max-h-[220px] overflow-y-auto leading-relaxed">Initializing Local Parser components...</pre>
+                </div>
+
+                <!-- Converted feedback notification boxes -->
+                <div id="conversion-success-box" class="p-5 rounded-2xl bg-teal-500/10 border border-teal-500/20 text-teal-400 text-sm space-y-2 hidden">
+                    <div class="flex items-center font-bold">
+                        <svg class="w-5 h-5 mr-2 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Standalone compilation complete.
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Full automation packaging constructed. We injected environment configurations, execution requirements, conftest modules, and direct test files conforming to Pytest conventions. Click next to inspect downloads.
+                    </p>
+                </div>
+            </div>
+
+            <!-- STEP 5: DOWNLOAD COMPLETE ZIP BLUEPRINTS PANELS -->
+            <div class="wizard-step-panel glass-panel border border-slate-200 dark:border-slate-800 p-12 rounded-3xl hidden text-center space-y-8" data-step="5">
+                <div class="w-20 h-20 bg-teal-500/10 text-teal-400 border border-teal-500/20 rounded-full flex items-center justify-center mx-auto shadow-xl animate-float">
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                    </svg>
+                </div>
+
+                <div class="space-y-2">
+                    <h3 class="text-2xl font-extrabold text-slate-900 dark:text-white">Pytest Suite Generated Successfully!</h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 max-w-sm mx-auto leading-relaxed">Your full-stack automation ZIP archive contains isolated, ready-to-run py.test models.</p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4 items-center justify-center max-w-md mx-auto">
+                    <!-- Standard full pkg ZIP download anchor -->
+                    <a id="btn-wizard-download-suite" href="#" class="w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-teal-500 to-teal-600 font-bold text-white rounded-xl shadow-lg shadow-teal-500/20 flex items-center justify-center space-x-2 hover:scale-105 active:scale-95 transition">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        <span>Download ZIP Package</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- CONTROL BUTTON ACTIONS FOOTER -->
+        <div class="mt-8 flex items-center justify-between relative z-10 pt-6 border-t border-slate-200 dark:border-slate-800/40">
+            <button id="btn-wizard-prev" class="px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-sm font-semibold hover:bg-slate-100 dark:hover:bg-slate-850 hover:text-slate-900 dark:hover:text-white transition hidden">
+                ← Previous
+            </button>
+            <button id="btn-wizard-skip" class="px-5 py-2.5 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 text-sm font-semibold transition">
+                Skip Introduction
+            </button>
+
+            <button id="btn-wizard-next" disabled class="px-6 py-2.5 rounded-xl bg-orange-500 text-white font-bold text-sm tracking-wide shadow shadow-orange-500/20 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-orange-600 hover:scale-105 transition-all">
+                Get Started
+            </button>
+        </div>
+
+    </main>
+
+    <!-- App scripts initialization -->
+    <script src="/static/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,274 @@
+/* 
+   Postman Collection -> Pytest Migrator
+   Main Stylesheet - Custom animations, variables, transitions & theme utilities
+*/
+
+:root {
+  /* Brand Colors */
+  --brand-orange: #FF6B00;
+  --brand-orange-light: #FF8A00;
+  --brand-blue: #0A66C2;
+  --brand-blue-light: #1976D2;
+  --brand-yellow: #FFD600;
+  --brand-red: #FF3D3D;
+  --brand-green: #14B8A6;
+  
+  /* Slate Theme Variables */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  
+  /* Default light theme values */
+  --bg-primary: #F8FAFC;
+  --bg-secondary: #FFFFFF;
+  --border-color: #E2E8F0;
+  --text-primary: #1E293B;
+  --text-secondary: #475569;
+  --card-bg: #FFFFFF;
+  --glass-border: rgba(14, 165, 233, 0.1);
+  --sidebar-bg: #F1F5F9;
+  --sidebar-text: #475569;
+  --shadow-color: rgba(15, 23, 42, 0.08);
+}
+
+/* Dark theme variables class */
+.dark-mode {
+  --bg-primary: #0F172A;
+  --bg-secondary: #1E293B;
+  --border-color: #334155;
+  --text-primary: #FFFFFF;
+  --text-secondary: #94A3B8;
+  --card-bg: #1E293B;
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --sidebar-bg: #0B0F19;
+  --sidebar-text: #64748B;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
+/* Base Styles */
+html, body {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(2deg);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+}
+
+@keyframes ripple {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 107, 0, 0.3), 0 0 0 0 rgba(10, 102, 194, 0.3);
+  }
+  70% {
+    box-shadow: 0 0 0 15px rgba(255, 107, 0, 0), 0 0 0 30px rgba(10, 102, 194, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 107, 0, 0), 0 0 0 0 rgba(10, 102, 194, 0);
+  }
+}
+
+@keyframes float-particle {
+  0% {
+    transform: translateY(0) translateX(0) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-50px) translateX(25px) scale(1.2);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(-100px) translateX(0) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+
+/* Custom CSS Helpers */
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 3s ease-in-out infinite;
+}
+
+.animate-ripple {
+  animation: ripple 2.5s infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Floating Particles Container */
+.particles-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  background-color: var(--brand-orange);
+  border-radius: 50%;
+  opacity: 0.2;
+  animation: float-particle 8s infinite linear;
+}
+
+.particle-blue {
+  background-color: var(--brand-blue);
+}
+
+/* Custom UI Cards - Premium Glassmorphism */
+.glass-panel {
+  background: var(--card-bg);
+  backdrop-filter: blur(16px) saturate(120%);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 30px 0 var(--shadow-color);
+}
+
+.glass-card {
+  background: var(--card-bg);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 20px 0 var(--shadow-color);
+}
+
+/* Theme Toggle Button */
+.theme-toggle-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+  transform: scale(1.05);
+  background: var(--border-color);
+}
+
+/* Dashboard Navigation Active States */
+.nav-link.active {
+  background-color: var(--brand-orange);
+  color: white !important;
+}
+
+.nav-link {
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
+  background-color: var(--border-color);
+}
+
+/* Code Highlights Container */
+.code-container {
+  font-family: 'JetBrains Mono', Courier, monospace;
+  background: #0B0F19 !important;
+  color: #E2E8F0 !important;
+  border-radius: 12px;
+  border: 1px solid #1E293B;
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+/* Button & interactive states */
+.btn-primary {
+  background: linear-gradient(135deg, var(--brand-orange) 0%, var(--brand-orange-light) 100%);
+  color: white;
+  transition: all 0.25s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -5px rgba(255, 107, 0, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-blue {
+  background: linear-gradient(135deg, var(--brand-blue) 0%, var(--brand-blue-light) 100%);
+  color: white;
+  transition: all 0.25s ease;
+}
+
+.btn-blue:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -5px rgba(10, 102, 194, 0.4);
+}
+
+/* Drag And Drop area animations */
+.drag-drop-area {
+  border: 2px dashed var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.drag-drop-area.dragover {
+  border-color: var(--brand-orange);
+  background-color: rgba(255, 107, 0, 0.05);
+  transform: scale(1.02);
+}
