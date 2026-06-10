@@ -1,86 +1,91 @@
 # Postman Collection to Pytest Migrator
 
-## Overview
+## Live Deployment
 
-Postman Collection to Pytest Migrator is an AI-assisted automation platform that converts Postman Collection v2.1 files into executable Pytest test scripts.
+Render Deployment URL:
 
-The application automatically extracts API requests, headers, payloads, variables, and Postman assertions, then generates Python-based test automation scripts with recommendations and test case suggestions.
+https://postman-pytest-migrator-2.onrender.com
 
-The system combines a rule-based conversion engine with AI-assisted conversion capabilities to handle both standard and complex Postman test logic.
+
+## Project Overview
+
+Postman Collection to Pytest Migrator is an AI-assisted automation platform that converts Postman Collection v2.1 files into executable Pytest test scripts. The system automatically extracts API requests, headers, payloads, variables, and Postman assertions, then generates Python-based test automation scripts along with recommendations and test case suggestions.
+
+The platform combines a Rule-Based Conversion Engine with an AI-Assisted Conversion Engine to handle both simple and complex Postman test logic.
 
 ---
 
 ## Problem Statement
 
-Many QA teams maintain API tests inside Postman collections.
+Many QA teams store API testing logic inside Postman collections. While Postman is useful for API validation, migrating test cases to Pytest requires significant manual effort.
 
-Challenges:
+### Challenges
 
-- Test logic remains locked inside Postman
-- Manual conversion to Pytest is time-consuming
-- Human errors occur during migration
-- Maintaining both Postman and Pytest versions increases effort
+* Test logic remains locked inside Postman
+* Manual migration to Pytest is time-consuming
+* High risk of human error
+* Difficult maintenance of multiple testing frameworks
+* Lack of automated recommendation generation
 
 ---
 
 ## Solution
 
-The platform automates migration by:
+The application automates the migration workflow:
 
-1. Uploading a Postman Collection
-2. Parsing API requests and assertions
-3. Validating collection structure
-4. Converting assertions into Pytest format
-5. Generating recommendations and test cases
-6. Producing downloadable Python scripts
+1. Upload Postman Collection
+2. Parse API definitions and assertions
+3. Validate collection structure
+4. Convert assertions into Pytest format
+5. Generate recommendations and test cases
+6. Download executable Python scripts
 
 ---
 
-## Features
+## Key Features
 
-### User Management
+### Authentication Module
 
-- User Registration
-- User Login
-- Session Authentication
-- Secure Password Hashing
+* User Registration
+* User Login
+* Session-Based Authentication
+* Secure Password Hashing
 
 ### Collection Processing
 
-- Postman Collection Upload
-- Collection Validation
-- API Extraction
-- Assertion Extraction
+* Postman Collection Upload
+* Collection Validation
+* API Extraction
+* Assertion Extraction
 
 ### AI-Assisted Migration
 
-- Rule-Based Conversion Engine
-- AI-Assisted Conversion Engine
-- Hybrid Conversion Workflow
+* Rule-Based Conversion Engine
+* AI-Assisted Conversion Engine
+* Hybrid Conversion Workflow
 
 ### Reporting
 
-- Conversion Reports
-- Test Case Suggestions
-- Positive Test Recommendations
-- Negative Test Recommendations
-- Boundary Test Recommendations
-- Security Recommendations
+* Conversion Reports
+* Positive Test Recommendations
+* Negative Test Recommendations
+* Boundary Test Recommendations
+* Security Recommendations
 
 ### Dashboard
 
-- Analytics Dashboard
-- Collection History
-- Generated Scripts
-- User Statistics
+* Collection History
+* Conversion Statistics
+* Generated Scripts
+* User Analytics
 
 ### UI Features
 
-- Landing Page
-- Onboarding Wizard
-- Dark Theme
-- Light Theme
-- Responsive Design
+* Landing Page
+* Onboarding Wizard
+* Light Theme
+* Dark Theme
+* Responsive Design
 
 ---
 
@@ -114,30 +119,30 @@ Download Center
 
 ### Frontend
 
-- HTML5
-- CSS3
-- JavaScript
+* HTML5
+* CSS3
+* JavaScript
 
 ### Backend
 
-- Python 3
-- Flask
+* Python
+* Flask
 
 ### Database
 
-- SQLite
+* SQLite
 
-### AI Layer
+### AI Integration
 
-- Google Gemini API
+* Google Gemini API
 
-### Testing
+### Testing Framework
 
-- Pytest
+* Pytest
 
 ### Deployment
 
-- Render
+* Render
 
 ---
 
@@ -167,11 +172,13 @@ project/
 
 ├── generated_reports/
 
+├── sample_data/
+
 └── tests/
 
 ---
 
-## Installation
+## Installation Guide
 
 ### Clone Repository
 
@@ -185,11 +192,11 @@ python -m venv venv
 
 ### Activate Environment
 
-Windows
+Windows:
 
 venv\Scripts\activate
 
-Linux/Mac
+Linux/Mac:
 
 source venv/bin/activate
 
@@ -197,11 +204,9 @@ source venv/bin/activate
 
 pip install -r requirements.txt
 
----
+### Configure Environment Variables
 
-## Environment Variables
-
-Create .env file
+Create a .env file:
 
 GEMINI_API_KEY=your_api_key
 
@@ -209,66 +214,101 @@ SECRET_KEY=your_secret_key
 
 DATABASE_PATH=database/migrator.db
 
----
-
-## Run Application
+### Run Application
 
 python app.py
 
-Application runs on:
+Application URL:
 
 http://localhost:3000
 
 ---
 
-## Usage
+## Sample Workflow
 
-1. Register Account
-2. Login
-3. Complete Onboarding
-4. Upload Postman Collection
+1. Register a new account
+2. Login to the platform
+3. Complete onboarding wizard
+4. Upload Postman Collection JSON
 5. Generate Pytest Script
-6. Review Reports
-7. Download Generated Files
+6. Review recommendations and reports
+7. Download generated files
+
+---
+
+## Sample Input
+
+Location:
+
+sample_data/input/basic_collection.json
+
+---
+
+## Expected Output
+
+Location:
+
+sample_data/expected_output/expected_pytest.py
+
+---
+
+## Test Cases
+
+Available under:
+
+tests/
+
+Includes:
+
+* Authentication Tests
+* Parser Tests
+* Converter Tests
+* Download Tests
 
 ---
 
 ## Assumptions
 
-- Postman Collection follows v2.1 schema
-- Collection JSON is valid
-- Internet access is available for AI-assisted conversions
-- User has valid Gemini API access
+* Postman Collection follows v2.1 schema
+* Uploaded JSON is valid
+* Internet access is available for AI-assisted conversions
+* User has Gemini API access
 
 ---
 
 ## Limitations
 
-- Complex custom JavaScript may require AI assistance
-- SQLite is suitable for small to medium workloads
-- Generated scripts may require manual review for highly customized workflows
+* Highly customized JavaScript may require manual review
+* SQLite is intended for small-to-medium workloads
+* Generated scripts should be validated before production use
 
 ---
 
 ## Future Enhancements
 
-- PostgreSQL Support
-- Multi-Collection Batch Processing
-- CI/CD Integration
-- Test Coverage Analytics
-- AI-Powered Optimization Suggestions
-
----
-
-## Deployment
-
-Deployed using Render Cloud Platform.
-URL : https://postman-pytest-migrator-2.onrender.com
-
----
+* PostgreSQL Integration
+* Batch Collection Processing
+* CI/CD Integration
+* Test Coverage Analytics
+* AI Optimization Suggestions
 
 
 
-Computer Science and Engineering
+## Demo Video Walkthrough
+
+The demo video demonstrates:
+
+1. User Registration
+2. User Login
+3. Onboarding Flow
+4. Collection Upload
+5. Collection Parsing
+6. Pytest Generation
+7. Recommendation Generation
+8. Report Analysis
+9. Script Download
+10. Multi-User Data Isolation
+
+
 
 J.J. College of Engineering and Technology
